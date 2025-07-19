@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive De-escalation Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .risk-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+        .scenario-btn.active {
+            background-color: #4f46e5;
+            color: white;
+            box-shadow: 0 4px 14px 0 rgb(0 0 0 / 10%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">De-escalation Matrix</h1>
+            <p class="mt-2 text-base sm:text-lg text-gray-600">A scientific guide to handling volatile confrontations.</p>
+            <p class="mt-1 text-sm text-red-600 font-medium">Disclaimer: This is for informational purposes. In any dangerous situation, prioritize your safety and contact emergency services (112 in the EU).</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="flex flex-col md:flex-row gap-8">
+
+            <!-- Scenario Selector -->
+            <nav class="md:w-1/3">
+                <h2 class="text-lg font-semibold mb-3 text-gray-700 border-b pb-2">Choose an Approach:</h2>
+                <div id="scenario-selector" class="flex flex-row md:flex-col flex-wrap gap-2">
+                    <!-- Buttons will be injected by JS -->
+                </div>
+            </nav>
+
+            <!-- Scenario Details -->
+            <main id="scenario-details" class="md:w-2/3 bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                <!-- Content will be injected by JS -->
+            </main>
+
+        </div>
+
+        <!-- Conclusion -->
+        <footer class="mt-10 bg-indigo-700 text-white rounded-xl p-6 shadow-2xl">
+            <h2 class="text-2xl font-bold mb-3">Conclusion: The Safest Strategy</h2>
+            <p class="text-indigo-200 mb-4">While multiple responses are possible, the scientific data is clear. Any form of engagement—from direct confrontation to subtle sarcasm—introduces unpredictable variables and significantly increases the risk of escalation. The agitated brain, especially one affected by stimulants, is primed for a threat response (fight-or-flight).</p>
+            <p class="font-semibold text-lg">The optimal and safest approach is always <span class="bg-white text-indigo-700 px-2 py-1 rounded-md">Strategic Disengagement</span>. By "muting up," you refuse to provide the stimulus needed to fuel the conflict. Removing yourself from the situation is not a sign of weakness; it is the most intelligent and powerful action you can take to guarantee your own safety.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- DATA ---
+        // Data structure containing all information for the different scenarios.
+        const scenarios = [
+            {
+                id: 5,
+                title: "Direct Confrontation",
+                aggression: "Most Aggressive",
+                risk: 100,
+                riskColor: "bg-red-600",
+                description: "Directly challenging the individual's statements, behavior, or intelligence. This involves arguing, correcting them, or telling them to 'shut up'.",
+                verbalCues: ["'You're wrong.'", "'That's a stupid thing to say.'", "'Calm down!'", "'You're acting crazy.'"],
+                nonVerbalCues: "Direct, sustained eye contact. Pointing gestures. Standing face-to-face. Clenched jaw or fists.",
+                scientificBreakdown: `
+                    <h4 class="font-semibold text-gray-800">Your Brain:</h4> 
+                    <p class="mb-2">You are initiating a threat response. Your own amygdala activates, releasing cortisol and adrenaline. Your prefrontal cortex (rational thought) is being bypassed in favor of a limbic, emotional reaction.</p>
+                    <h4 class="font-semibold text-gray-800">Their Brain:</h4>
+                    <p>This is a direct confirmation of their (potentially paranoid) worldview that they are under attack. Their amygdala goes into overdrive, triggering a maximal fight-or-flight response. Stimulants like meth already heighten paranoia and aggression, so you are essentially lighting a fuse. Rational processing is nearly impossible for them at this stage.</p>
+                `
+            },
+            {
+                id: 4,
+                title: "Sarcastic Engagement",
+                aggression: "Aggressive",
+                risk: 85,
+                riskColor: "bg-orange-500",
+                description: "Using sarcasm, mockery, or passive-aggressive comments to undermine the individual. This is an indirect form of confrontation.",
+                verbalCues: ["'Oh, wow, you must be a genius.'", "'Sure, whatever you say.' (with an eye-roll)", "'Is that what you're going with?'"],
+                nonVerbalCues: "Smirking, eye-rolling, dismissive hand gestures, looking away while they talk.",
+                scientificBreakdown: `
+                    <h4 class="font-semibold text-gray-800">Your Brain:</h4> 
+                    <p class="mb-2">You are attempting to assert intellectual dominance, which is still a form of conflict. This provides a feeling of control but is highly provocative.</p>
+                    <h4 class="font-semibold text-gray-800">Their Brain:</h4>
+                    <p>Sarcasm requires complex social-cognitive processing, which is impaired by high stress and stimulants. They are likely to miss the nuance and simply register the hostile tone and body language as a direct attack. This can be even more enraging than direct confrontation because it adds the element of perceived mockery and humiliation.</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Assertive Boundary Setting",
+                aggression: "Defensive",
+                risk: 50,
+                riskColor: "bg-yellow-400",
+                description: "Firmly, calmly, and clearly stating your intention to not participate in the conversation and to leave. This is not about them, but about your own actions.",
+                verbalCues: ["'I'm not going to have this conversation.'", "'I am leaving now.'", "'I don't want to discuss this.'"],
+                nonVerbalCues: "Neutral facial expression. Holding hands up in a non-threatening 'stop' gesture. Taking a step back to create space.",
+                scientificBreakdown: `
+                    <h4 class="font-semibold text-gray-800">Your Brain:</h4> 
+                    <p class="mb-2">You are engaging your prefrontal cortex to override an emotional reaction. You are stating a fact about your own behavior, which is a high-level cognitive function.</p>
+                    <h4 class="font-semibold text-gray-800">Their Brain:</h4>
+                    <p>This can go one of two ways. It can de-escalate by removing the 'opponent'. However, for a highly agitated person, any form of perceived rejection or refusal can still be interpreted as a challenge to their dominance, potentially leading to an attempt to block your exit or escalate to maintain control.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Calm Deflection",
+                aggression: "Non-Confrontational",
+                risk: 25,
+                riskColor: "bg-sky-400",
+                description: "Briefly acknowledging their emotional state without agreeing with the content, then creating a reason to exit the situation.",
+                verbalCues: ["'I can see you're upset. I have to use the restroom.'", "'This seems really important to you. I just remembered I have an urgent call to make.'"],
+                nonVerbalCues: "Nodding slowly. Avoiding direct, sustained eye contact. Physically turning your body towards an exit.",
+                scientificBreakdown: `
+                    <h4 class="font-semibold text-gray-800">Your Brain:</h4> 
+                    <p class="mb-2">This is a highly strategic use of the prefrontal cortex. You are actively managing your own emotional response and using social cognition to create a plausible exit without creating a direct conflict.</p>
+                    <h4 class="font-semibold text-gray-800">Their Brain:</h4>
+                    <p>The brief validation ('I can see you're upset') can momentarily lower their defenses, as it's not a direct challenge. The immediate redirection to a neutral, external reason for your departure is less likely to be perceived as a personal rejection. It deprives the conflict of energy without triggering a new threat response.</p>
+                `
+            },
+            {
+                id: 1,
+                title: "Strategic Disengagement",
+                aggression: "Least Aggressive",
+                risk: 5,
+                riskColor: "bg-green-500",
+                description: "Saying nothing. Breaking eye contact and physically removing yourself from the situation at the first safe opportunity without explanation or excuse.",
+                verbalCues: ["(Silence)"],
+                nonVerbalCues: "Breaking eye contact. Turning and walking away calmly but with purpose. Creating as much distance as possible.",
+                scientificBreakdown: `
+                    <h4 class="font-semibold text-gray-800">Your Brain:</h4> 
+                    <p class="mb-2">This is the ultimate act of self-regulation, prioritizing the survival instinct (flight) managed by the prefrontal cortex over the social instinct to engage. It requires overriding the ego's need to respond.</p>
+                    <h4 class="font-semibold text-gray-800">Their Brain:</h4>
+                    <p>You provide zero stimulus. There are no words to argue with, no body language to interpret as hostile. While they may continue their tirade, it is directed into a void. Without a target for their aggression, the feedback loop of the conflict is broken. The energy has nowhere to go, which is the fastest path to de-escalation by removing one of the two necessary components of a conflict.</p>
+                `
+            }
+        ];
+
+        // --- DOM ELEMENTS ---
+        const scenarioSelector = document.getElementById('scenario-selector');
+        const scenarioDetails = document.getElementById('scenario-details');
+
+        // --- FUNCTIONS ---
+
+        /**
+         * Renders the details of the selected scenario into the main content area.
+         * @param {number} scenarioId - The ID of the scenario to display.
+         */
+        function renderScenario(scenarioId) {
+            const scenario = scenarios.find(s => s.id === scenarioId);
+            if (!scenario) return;
+
+            scenarioDetails.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">${scenario.title}</h2>
+                        <p class="text-sm font-medium text-gray-500">${scenario.aggression}</p>
+                    </div>
+                    <span class="text-xs font-bold uppercase px-3 py-1 rounded-full text-white ${scenario.riskColor}">${scenario.risk}% RISK</span>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="font-semibold text-lg mb-2">Risk of Escalation:</h3>
+                    <div class="w-full bg-gray-200 rounded-full h-4">
+                        <div class="risk-bar-fill h-4 rounded-full ${scenario.riskColor}" style="width: ${scenario.risk}%"></div>
+                    </div>
+                </div>
+                
+                <div class="space-y-5">
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Approach Description:</h3>
+                        <p class="text-gray-700">${scenario.description}</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Common Cues:</h3>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-1">
+                                <h4 class="font-medium text-gray-600">Verbal:</h4>
+                                <ul class="list-disc list-inside text-gray-600 text-sm">
+                                    ${scenario.verbalCues.map(cue => `<li>${cue}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-gray-600">Non-Verbal:</h4>
+                                <p class="text-gray-600 text-sm">${scenario.nonVerbalCues}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Scientific Breakdown:</h3>
+                        <div class="text-gray-700 text-sm p-4 bg-gray-100 rounded-lg border border-gray-200">
+                            ${scenario.scientificBreakdown}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Update active state on buttons
+            document.querySelectorAll('.scenario-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.dataset.id) === scenarioId) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        /**
+         * Populates the scenario selector buttons.
+         */
+        function populateSelector() {
+            // Sort from least to most aggressive for display order
+            const sortedScenarios = [...scenarios].sort((a, b) => a.risk - b.risk);
+            sortedScenarios.forEach(scenario => {
+                const button = document.createElement('button');
+                button.className = 'scenario-btn w-full text-left p-3 rounded-lg font-medium transition-all duration-200 ease-in-out hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500';
+                button.textContent = scenario.title;
+                button.dataset.id = scenario.id;
+                button.addEventListener('click', () => renderScenario(scenario.id));
+                scenarioSelector.appendChild(button);
+            });
+        }
+
+        // --- INITIALIZATION ---
+        window.addEventListener('DOMContentLoaded', () => {
+            populateSelector();
+            // Render the least aggressive scenario by default (ID 1)
+            renderScenario(1);
+        });
+
+    </script>
+
+</body>
+</html>
